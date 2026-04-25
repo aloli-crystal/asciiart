@@ -1,0 +1,30 @@
+= Changelog
+:toc: left
+:toc-title: Versions
+:toclevels: 2
+
+== v0.1.0 — 2026-04-25
+
+First public release. Pure-Crystal FIGlet-style text-to-banner
+rendering, with five embedded fonts (no `figlet` C binary needed at
+runtime).
+
+* **FIGlet `.flf` font parser** in pure Crystal (FIGfont v2 format).
+  Reads the printable ASCII glyph range (32-126) plus the seven
+  required Latin-1 extras when present.
+* **Renderer** : full-width glyph juxtaposition (no smushing in
+  v0.1 — output is slightly wider than `figlet` defaults but always
+  readable).
+* **Five built-in fonts** embedded at compile time via the
+  `read_file` macro : `standard`, `small`, `big`, `slant`,
+  `banner`. All under FIGlet's permissive licence.
+* **External font loading** via `Fonts.load_file(path)`.
+* **CLI** : `crystal-asciiart [-f FONT] [--font-file PATH]
+  [--list-fonts] TEXT…` with short and long flags.
+* **API** : `AsciiArt.render(text, font:)`, `render_lines`,
+  `fonts`. Lower-level access via `AsciiArt::Renderer.new(font)`.
+* **No runtime dependencies**.
+* Bilingual README (EN + FR), CHANGELOG.
+* CI : ameba lint + crystal spec on every push.
+* **25 unit tests** covering the parser, the renderer and the
+  public API.

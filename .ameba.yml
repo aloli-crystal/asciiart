@@ -1,0 +1,35 @@
+# Configuration ameba alignée avec l'écosystème aloli-crystal.
+# Mêmes règles désactivées que dans crystal-asciidoctor-pdf, crystal-pdf, etc.
+
+Naming/QueryBoolMethods:
+  Enabled: false
+
+Naming/BlockParameterName:
+  Enabled: false
+
+Style/NegatedConditionsInUnless:
+  Enabled: false
+
+Style/ParenthesesAroundCondition:
+  Enabled: false
+
+Style/UnlessElse:
+  Enabled: false
+
+Lint/NotNil:
+  Enabled: false
+
+Lint/UselessAssign:
+  Enabled: false
+
+Lint/Formatting:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Lint/UnusedArgument:
+  Enabled: false
+
+Performance/ChainedCallWithNoBang:
+  Enabled: false

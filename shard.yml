@@ -1,0 +1,26 @@
+name: crystal-asciiart
+version: 0.1.0
+
+description: |
+  ASCII art generation in pure Crystal. v0.1 ships FIGlet-style
+  text-to-banner rendering with five embedded fonts (standard,
+  small, big, slant, banner). No external runtime dependency —
+  fonts are baked into the binary at compile time.
+
+  Future: image-to-ASCII, free-form drawing helpers.
+
+authors:
+  - Philippe Nénert <philippe@aloli.fr>
+
+license: MIT
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: "~> 1.6"
+
+targets:
+  crystal-asciiart:
+    main: src/cli.cr
+
+crystal: ">= 1.19.0"

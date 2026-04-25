@@ -1,0 +1,174 @@
+= crystal-asciiart
+:toc: macro
+:toclevels: 2
+
+ASCII art generation in pure Crystal. v0.1 ships **FIGlet-style
+text-to-banner rendering** with five embedded fonts (no `figlet`
+binary needed at runtime — fonts are baked into your binary at
+compile time).
+
+🇫🇷 Lisez ce document en français : link:README.fr.adoc[README.fr.adoc]
+
+toc::[]
+
+== Why
+
+Adding a startup banner to a CLI, a project header to a build log,
+or a punchy ASCII title to a README is a small but recurring need.
+The Crystal ecosystem had no native FIGlet parser before v0.1 ; you
+had to shell out to the C `figlet` binary, which means an external
+dependency and a `pkg`/`brew` install on every target machine.
+
+`crystal-asciiart` fixes that : pure Crystal, fonts embedded, single
+binary, works offline.
+
+== Features (v0.1)
+
+* **FIGlet `.flf` font parser** in pure Crystal (FIGfont v2 format).
+* **Renderer** that turns text into a multi-line ASCII art banner.
+* **Five built-in fonts** embedded at compile time:
+  * `standard` — the classic FIGlet default
+  * `small` — compact 4-line variant
+  * `big` — large fat letters
+  * `slant` — italic-style
+  * `banner` — single-line `#`-based banner
+* **External font loading** via `Fonts.load_file(path)` for any
+  `.flf` you have on disk.
+* **No runtime dependencies** : no `figlet`, no `libfiglet`, no
+  network call. Just `shards build` and ship.
+* **CLI** : `crystal-asciiart [-f FONT] TEXT…`
+
+== Roadmap
+
+* **v0.2** — FIGlet smushing rules (glyphs touch each other, like
+  the C figlet `--smush` mode)
+* **v0.3** — image-to-ASCII renderer (à la `jp2a`)
+* **v0.4** — colour output (ANSI escape sequences)
+* **v0.5+** — frames, boxes, free-form drawing helpers
+
+== Installation
+
+Add to your `shard.yml` :
+
+[source,yaml]
+----
+dependencies:
+  crystal-asciiart:
+    github: aloli-crystal/crystal-asciiart
+    version: "~> 0.1"
+----
+
+then run `shards install`.
+
+For the CLI :
+
+[source,shell]
+----
+git clone https://github.com/aloli-crystal/crystal-asciiart
+cd crystal-asciiart
+shards build --release
+cp bin/crystal-asciiart ~/bin/   # or use crystal-bin-installer
+----
+
+== CLI
+
+[source,shell]
+----
+# Default font (standard).
+crystal-asciiart "Hello"
+
+# Pick another built-in font.
+crystal-asciiart -f slant "Crystal"
+
+# Use your own .flf file.
+crystal-asciiart --font-file ./mycustom.flf "Hi"
+
+# List the available built-in fonts.
+crystal-asciiart --list-fonts
+----
+
+=== Options
+
+[cols="1,3"]
+|===
+| Option | Description
+
+| `-f NAME`, `--font NAME`
+| Built-in font name. Default `standard`. See `--list-fonts`.
+
+| `--font-file PATH`
+| Load a custom `.flf` file instead of a built-in one.
+
+| `-l`, `--list-fonts`
+| List the built-in fonts and exit.
+
+| `-v`, `--version`, `-h`, `--help`
+| Standard.
+|===
+
+== API
+
+[source,crystal]
+----
+require "crystal-asciiart"
+
+# Easiest entry point.
+puts AsciiArt.render("Hello")
+
+# Pick a font.
+puts AsciiArt.render("Hello", font: "slant")
+
+# As a list of lines (e.g. to colourise each row).
+AsciiArt.render_lines("Hello", font: "big").each do |row|
+  puts row.colorize.cyan
+end
+
+# Discover built-in fonts.
+AsciiArt.fonts # => ["banner", "big", "slant", "small", "standard"]
+
+# Use your own .flf font.
+font = AsciiArt::Fonts.load_file("./mycustom.flf")
+puts AsciiArt::Renderer.new(font).render("Hi")
+
+# Measure without rendering.
+AsciiArt::Renderer.new(font).width("Hello") # => 36
+----
+
+== Limitations (v0.1)
+
+* **No smushing** — glyphs are juxtaposed at full width. Output is
+  slightly wider than `figlet` defaults, but always readable.
+* **Latin-1 only** — code-tagged glyphs (used by some fonts for
+  non-Latin scripts) are skipped during parsing.
+* **No image-to-ASCII yet** — see roadmap.
+* **No colour output yet** — pipe through `lolcat` or use a
+  Crystal colour library on the lines returned by `render_lines`.
+
+== Font credits
+
+The five embedded fonts come from the FIGlet distribution
+(http://www.figlet.org/) and carry FIGlet's permissive licence
+(« Permission is hereby given to modify this font, as long as the
+modifier's name is placed on a comment line. »). Original authors :
+
+* `standard`, `small`, `big`, `slant` — Glenn Chappell, Ian Chai,
+  Frank, John Cowan, Paul Burton (1993-1996)
+* `banner` — Frank (1993)
+
+See each `.flf` file's comment block in `data/fonts/` for the full
+attribution.
+
+== Development
+
+[source,shell]
+----
+shards install
+crystal spec
+bin/ameba
+crystal tool format src/ spec/
+----
+
+== License
+
+MIT — see link:LICENSE[LICENSE]. Embedded fonts retain their
+original FIGlet licence (cf. comment blocks in `data/fonts/`).

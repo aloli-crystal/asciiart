@@ -1,0 +1,30 @@
+= Journal des modifications
+:toc: left
+:toc-title: Versions
+:toclevels: 2
+
+== v0.1.0 — 2026-04-25
+
+Première version publique. Rendu de texte en bannière façon FIGlet
+en Crystal pur, avec cinq polices embarquées (pas besoin du binaire
+C `figlet` à l'exécution).
+
+* **Parseur de polices FIGlet `.flf`** en Crystal pur (format
+  FIGfont v2). Lit les glyphes ASCII imprimables (32-126) plus les
+  sept extras Latin-1 requis quand présents.
+* **Renderer** : juxtaposition des glyphes à pleine largeur (pas
+  de smushing en v0.1 — sortie légèrement plus large que les
+  défauts `figlet` mais toujours lisible).
+* **Cinq polices intégrées** embarquées à la compilation via la
+  macro `read_file` : `standard`, `small`, `big`, `slant`,
+  `banner`. Toutes sous licence permissive FIGlet.
+* **Chargement de police externe** via `Fonts.load_file(chemin)`.
+* **CLI** : `crystal-asciiart [-f POLICE] [--font-file CHEMIN]
+  [--list-fonts] TEXTE…` avec drapeaux courts et longs.
+* **API** : `AsciiArt.render(text, font:)`, `render_lines`,
+  `fonts`. Accès bas niveau via `AsciiArt::Renderer.new(font)`.
+* **Aucune dépendance d'exécution**.
+* README bilingue (EN + FR), CHANGELOG bilingue.
+* CI : lint ameba + crystal spec à chaque push.
+* **25 tests unitaires** couvrant le parseur, le renderer et l'API
+  publique.

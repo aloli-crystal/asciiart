@@ -1,0 +1,182 @@
+= crystal-asciiart
+:toc: macro
+:toclevels: 2
+
+Génération d'ASCII art en Crystal pur. La v0.1 livre le **rendu de
+texte en bannière façon FIGlet** avec cinq polices embarquées (pas
+besoin du binaire `figlet` à l'exécution — les polices sont incluses
+dans votre binaire à la compilation).
+
+🇬🇧 Read this in English: link:README.adoc[README.adoc]
+
+toc::[]
+
+== Pourquoi
+
+Ajouter une bannière de démarrage à une CLI, un en-tête de projet
+dans un journal de build, ou un titre ASCII bien visible dans un
+README est un petit besoin récurrent. L'écosystème Crystal n'avait
+pas de parseur FIGlet natif avant la v0.1 ; il fallait shell-outer
+vers le binaire C `figlet`, ce qui implique une dépendance externe
+et une install `pkg`/`brew` sur chaque machine cible.
+
+`crystal-asciiart` corrige cela : Crystal pur, polices embarquées,
+binaire unique, fonctionne hors-ligne.
+
+== Fonctionnalités (v0.1)
+
+* **Parseur de polices FIGlet `.flf`** en Crystal pur (format
+  FIGfont v2).
+* **Renderer** qui transforme du texte en bannière ASCII multi-ligne.
+* **Cinq polices intégrées** embarquées à la compilation :
+  * `standard` — la classique par défaut de FIGlet
+  * `small` — variante compacte 4 lignes
+  * `big` — grosses lettres épaisses
+  * `slant` — style italique
+  * `banner` — bannière simple ligne en `#`
+* **Chargement de police externe** via `Fonts.load_file(chemin)`
+  pour tout `.flf` que vous avez sur disque.
+* **Aucune dépendance d'exécution** : pas de `figlet`, pas de
+  `libfiglet`, pas d'appel réseau. `shards build` puis on livre.
+* **CLI** : `crystal-asciiart [-f POLICE] TEXTE…`
+
+== Feuille de route
+
+* **v0.2** — règles de smushing FIGlet (les glyphes se touchent,
+  comme le `--smush` de figlet C)
+* **v0.3** — renderer image-vers-ASCII (à la `jp2a`)
+* **v0.4** — sortie en couleur (séquences ANSI)
+* **v0.5+** — cadres, encadrés, helpers de dessin libre
+
+== Installation
+
+Ajouter au `shard.yml` :
+
+[source,yaml]
+----
+dependencies:
+  crystal-asciiart:
+    github: aloli-crystal/crystal-asciiart
+    version: "~> 0.1"
+----
+
+puis lancer `shards install`.
+
+Pour la CLI :
+
+[source,shell]
+----
+git clone https://github.com/aloli-crystal/crystal-asciiart
+cd crystal-asciiart
+shards build --release
+cp bin/crystal-asciiart ~/bin/   # ou utiliser crystal-bin-installer
+----
+
+== CLI
+
+[source,shell]
+----
+# Police par défaut (standard).
+crystal-asciiart "Bonjour"
+
+# Choisir une autre police intégrée.
+crystal-asciiart -f slant "Crystal"
+
+# Utiliser un .flf maison.
+crystal-asciiart --font-file ./mapolice.flf "Salut"
+
+# Lister les polices intégrées.
+crystal-asciiart --list-fonts
+----
+
+=== Options
+
+[cols="1,3"]
+|===
+| Option | Description
+
+| `-f NOM`, `--font NOM`
+| Nom de la police intégrée. Défaut : `standard`. Voir
+  `--list-fonts`.
+
+| `--font-file CHEMIN`
+| Charger un fichier `.flf` maison au lieu d'une police intégrée.
+
+| `-l`, `--list-fonts`
+| Lister les polices intégrées et quitter.
+
+| `-v`, `--version`, `-h`, `--help`
+| Standard.
+|===
+
+== API
+
+[source,crystal]
+----
+require "crystal-asciiart"
+
+# Le point d'entrée le plus simple.
+puts AsciiArt.render("Bonjour")
+
+# Choisir une police.
+puts AsciiArt.render("Bonjour", font: "slant")
+
+# En liste de lignes (par exemple pour colorer chaque ligne).
+AsciiArt.render_lines("Bonjour", font: "big").each do |row|
+  puts row.colorize.cyan
+end
+
+# Découvrir les polices intégrées.
+AsciiArt.fonts # => ["banner", "big", "slant", "small", "standard"]
+
+# Utiliser une police .flf maison.
+font = AsciiArt::Fonts.load_file("./mapolice.flf")
+puts AsciiArt::Renderer.new(font).render("Salut")
+
+# Mesurer sans rendre.
+AsciiArt::Renderer.new(font).width("Bonjour") # => 36
+----
+
+== Limitations (v0.1)
+
+* **Pas de smushing** — les glyphes sont juxtaposés à largeur
+  maximale. La sortie est légèrement plus large que `figlet` par
+  défaut, mais toujours lisible.
+* **Latin-1 uniquement** — les glyphes code-taggés (utilisés par
+  certaines polices pour des scripts non latins) sont ignorés au
+  parsing.
+* **Pas encore d'image-vers-ASCII** — voir feuille de route.
+* **Pas encore de couleur** — pipez à travers `lolcat` ou utilisez
+  une lib Crystal de couleur sur les lignes retournées par
+  `render_lines`.
+
+== Crédits des polices
+
+Les cinq polices intégrées proviennent de la distribution FIGlet
+(http://www.figlet.org/) et portent la licence permissive de
+FIGlet (« Permission is hereby given to modify this font, as long
+as the modifier's name is placed on a comment line. »). Auteurs
+originaux :
+
+* `standard`, `small`, `big`, `slant` — Glenn Chappell, Ian Chai,
+  Frank, John Cowan, Paul Burton (1993-1996)
+* `banner` — Frank (1993)
+
+Voir le bloc de commentaires de chaque fichier `.flf` dans
+`data/fonts/` pour l'attribution complète.
+
+== Développement
+
+[source,shell]
+----
+shards install
+crystal spec
+bin/ameba
+crystal tool format src/ spec/
+----
+
+== Licence
+
+MIT — voir link:LICENSE[LICENSE]. Les polices embarquées
+conservent leur licence FIGlet d'origine (cf. blocs de
+commentaires dans `data/fonts/`).
