@@ -1,4 +1,4 @@
-= crystal-asciiart
+= asciiart
 :toc: macro
 :toclevels: 2
 
@@ -19,7 +19,7 @@ The Crystal ecosystem had no native FIGlet parser before v0.1 ; you
 had to shell out to the C `figlet` binary, which means an external
 dependency and a `pkg`/`brew` install on every target machine.
 
-`crystal-asciiart` fixes that : pure Crystal, fonts embedded, single
+`asciiart` fixes that : pure Crystal, fonts embedded, single
 binary, works offline.
 
 == Features (v0.1)
@@ -36,7 +36,7 @@ binary, works offline.
   `.flf` you have on disk.
 * **No runtime dependencies** : no `figlet`, no `libfiglet`, no
   network call. Just `shards build` and ship.
-* **CLI** : `crystal-asciiart [-f FONT] TEXT…`
+* **CLI** : `asciiart [-f FONT] TEXT…`
 
 == Roadmap
 
@@ -53,8 +53,8 @@ Add to your `shard.yml` :
 [source,yaml]
 ----
 dependencies:
-  crystal-asciiart:
-    github: aloli-crystal/crystal-asciiart
+  asciiart:
+    github: aloli-crystal/asciiart
     version: "~> 0.1"
 ----
 
@@ -64,10 +64,10 @@ For the CLI :
 
 [source,shell]
 ----
-git clone https://github.com/aloli-crystal/crystal-asciiart
-cd crystal-asciiart
+git clone https://github.com/aloli-crystal/asciiart
+cd asciiart
 shards build --release
-cp bin/crystal-asciiart ~/bin/   # or use crystal-bin-installer
+cp bin/asciiart ~/bin/   # or use crystal-bin-installer
 ----
 
 == CLI
@@ -75,16 +75,16 @@ cp bin/crystal-asciiart ~/bin/   # or use crystal-bin-installer
 [source,shell]
 ----
 # Default font (standard).
-crystal-asciiart "Hello"
+asciiart "Hello"
 
 # Pick another built-in font.
-crystal-asciiart -f slant "Crystal"
+asciiart -f slant "Crystal"
 
 # Use your own .flf file.
-crystal-asciiart --font-file ./mycustom.flf "Hi"
+asciiart --font-file ./mycustom.flf "Hi"
 
 # List the available built-in fonts.
-crystal-asciiart --list-fonts
+asciiart --list-fonts
 ----
 
 === Options
@@ -110,7 +110,7 @@ crystal-asciiart --list-fonts
 
 [source,crystal]
 ----
-require "crystal-asciiart"
+require "asciiart"
 
 # Easiest entry point.
 puts AsciiArt.render("Hello")

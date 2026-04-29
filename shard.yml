@@ -1,5 +1,5 @@
-name: crystal-asciiart
-version: 0.1.0
+name: asciiart
+version: 0.1.1
 
 description: |
   ASCII art generation in pure Crystal. v0.1 ships FIGlet-style
@@ -20,7 +20,7 @@ development_dependencies:
     version: "~> 1.6"
 
 targets:
-  crystal-asciiart:
+  asciiart:
     main: src/cli.cr
 
 crystal: ">= 1.19.0"

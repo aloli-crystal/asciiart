@@ -3,6 +3,19 @@
 :toc-title: Versions
 :toclevels: 2
 
+== v0.1.1 — 2026-04-29
+
+=== Changed
+
+* **GitHub repository renamed** from `aloli-crystal/crystal-asciiart`
+  to `aloli-crystal/asciiart` (Aloli naming convention: original
+  creations drop the `crystal-` prefix). Old links redirect automatically.
+* `name:` field in `shard.yml` updated from `crystal-asciiart` to `asciiart`.
+* Build target / CLI binary renamed `crystal-asciiart` → `asciiart`
+  (`shards build asciiart` → `bin/asciiart`).
+* New entry-point shim `src/asciiart.cr` (loads `src/ascii_art.cr`);
+  `require "crystal-asciiart"` → `require "asciiart"`.
+
 == v0.1.0 — 2026-04-25
 
 First public release. Pure-Crystal FIGlet-style text-to-banner

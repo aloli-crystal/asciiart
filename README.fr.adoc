@@ -1,4 +1,4 @@
-= crystal-asciiart
+= asciiart
 :toc: macro
 :toclevels: 2
 
@@ -20,7 +20,7 @@ pas de parseur FIGlet natif avant la v0.1 ; il fallait shell-outer
 vers le binaire C `figlet`, ce qui implique une dépendance externe
 et une install `pkg`/`brew` sur chaque machine cible.
 
-`crystal-asciiart` corrige cela : Crystal pur, polices embarquées,
+`asciiart` corrige cela : Crystal pur, polices embarquées,
 binaire unique, fonctionne hors-ligne.
 
 == Fonctionnalités (v0.1)
@@ -38,7 +38,7 @@ binaire unique, fonctionne hors-ligne.
   pour tout `.flf` que vous avez sur disque.
 * **Aucune dépendance d'exécution** : pas de `figlet`, pas de
   `libfiglet`, pas d'appel réseau. `shards build` puis on livre.
-* **CLI** : `crystal-asciiart [-f POLICE] TEXTE…`
+* **CLI** : `asciiart [-f POLICE] TEXTE…`
 
 == Feuille de route
 
@@ -55,8 +55,8 @@ Ajouter au `shard.yml` :
 [source,yaml]
 ----
 dependencies:
-  crystal-asciiart:
-    github: aloli-crystal/crystal-asciiart
+  asciiart:
+    github: aloli-crystal/asciiart
     version: "~> 0.1"
 ----
 
@@ -66,10 +66,10 @@ Pour la CLI :
 
 [source,shell]
 ----
-git clone https://github.com/aloli-crystal/crystal-asciiart
-cd crystal-asciiart
+git clone https://github.com/aloli-crystal/asciiart
+cd asciiart
 shards build --release
-cp bin/crystal-asciiart ~/bin/   # ou utiliser crystal-bin-installer
+cp bin/asciiart ~/bin/   # ou utiliser crystal-bin-installer
 ----
 
 == CLI
@@ -77,16 +77,16 @@ cp bin/crystal-asciiart ~/bin/   # ou utiliser crystal-bin-installer
 [source,shell]
 ----
 # Police par défaut (standard).
-crystal-asciiart "Bonjour"
+asciiart "Bonjour"
 
 # Choisir une autre police intégrée.
-crystal-asciiart -f slant "Crystal"
+asciiart -f slant "Crystal"
 
 # Utiliser un .flf maison.
-crystal-asciiart --font-file ./mapolice.flf "Salut"
+asciiart --font-file ./mapolice.flf "Salut"
 
 # Lister les polices intégrées.
-crystal-asciiart --list-fonts
+asciiart --list-fonts
 ----
 
 === Options
@@ -113,7 +113,7 @@ crystal-asciiart --list-fonts
 
 [source,crystal]
 ----
-require "crystal-asciiart"
+require "asciiart"
 
 # Le point d'entrée le plus simple.
 puts AsciiArt.render("Bonjour")
