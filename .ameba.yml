@@ -1,5 +1,5 @@
 # Configuration ameba alignée avec l'écosystème aloli-crystal.
-# Mêmes règles désactivées que dans crystal-asciidoctor-pdf, crystal-pdf, etc.
+# Mêmes règles désactivées que dans crystal-asciidoctor-pdf, pdf, etc.
 
 Naming/QueryBoolMethods:
   Enabled: false

@@ -1,27 +1,27 @@
 require "option_parser"
 require "./ascii_art"
 
-# crystal-asciiart CLI.
+# asciiart CLI.
 #
 # ```
 # # Default font.
-# crystal-asciiart "Hello"
+# asciiart "Hello"
 #
 # # Pick another built-in font.
-# crystal-asciiart -f slant "Crystal"
+# asciiart -f slant "Crystal"
 #
 # # Use your own .flf file.
-# crystal-asciiart --font-file ./mycustom.flf "Hi"
+# asciiart --font-file ./mycustom.flf "Hi"
 #
 # # List available built-in fonts.
-# crystal-asciiart --list-fonts
+# asciiart --list-fonts
 # ```
 
 font_name = AsciiArt::DEFAULT_FONT
 font_file : String? = nil
 
 parser = OptionParser.new do |p|
-  p.banner = "Usage : crystal-asciiart [options] TEXTE..."
+  p.banner = "Usage : asciiart [options] TEXTE..."
   p.separator ""
   p.separator "Options :"
 
@@ -32,7 +32,7 @@ parser = OptionParser.new do |p|
     exit 0
   end
   p.on("-v", "--version", "Show version and exit") do
-    puts "crystal-asciiart #{AsciiArt::VERSION}"
+    puts "asciiart #{AsciiArt::VERSION}"
     exit 0
   end
   p.on("-h", "--help", "Show this help and exit") do
@@ -61,7 +61,7 @@ if positional.empty?
 end
 
 # All non-option arguments are joined with a single space — lets the
-# user write `crystal-asciiart Hello World` without quoting.
+# user write `asciiart Hello World` without quoting.
 text = positional.join(' ')
 
 begin

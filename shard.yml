@@ -1,5 +1,5 @@
 name: asciiart
-version: 0.1.1
+version: 0.1.2
 
 description: |
   ASCII art generation in pure Crystal. v0.1 ships FIGlet-style

@@ -9,7 +9,7 @@ require "./ascii_art/fonts"
 # embedded fonts (no external runtime dependency).
 #
 # ```
-# require "crystal-asciiart"
+# require "asciiart"
 #
 # # One-liner: render text with the default `standard` font.
 # puts AsciiArt.render("Hello")

@@ -67,7 +67,7 @@ For the CLI :
 git clone https://github.com/aloli-crystal/asciiart
 cd asciiart
 shards build --release
-cp bin/asciiart ~/bin/   # or use crystal-bin-installer
+cp bin/asciiart ~/bin/   # or use bin-installer
 ----
 
 == CLI

@@ -7,14 +7,14 @@
 
 === Changed
 
-* **GitHub repository renamed** from `aloli-crystal/crystal-asciiart`
+* **GitHub repository renamed** from `aloli-crystal/asciiart`
   to `aloli-crystal/asciiart` (Aloli naming convention: original
   creations drop the `crystal-` prefix). Old links redirect automatically.
-* `name:` field in `shard.yml` updated from `crystal-asciiart` to `asciiart`.
-* Build target / CLI binary renamed `crystal-asciiart` → `asciiart`
+* `name:` field in `shard.yml` updated from `asciiart` to `asciiart`.
+* Build target / CLI binary renamed `asciiart` → `asciiart`
   (`shards build asciiart` → `bin/asciiart`).
 * New entry-point shim `src/asciiart.cr` (loads `src/ascii_art.cr`);
-  `require "crystal-asciiart"` → `require "asciiart"`.
+  `require "asciiart"` → `require "asciiart"`.
 
 == v0.1.0 — 2026-04-25
 
@@ -32,7 +32,7 @@ runtime).
   `read_file` macro : `standard`, `small`, `big`, `slant`,
   `banner`. All under FIGlet's permissive licence.
 * **External font loading** via `Fonts.load_file(path)`.
-* **CLI** : `crystal-asciiart [-f FONT] [--font-file PATH]
+* **CLI** : `asciiart [-f FONT] [--font-file PATH]
   [--list-fonts] TEXT…` with short and long flags.
 * **API** : `AsciiArt.render(text, font:)`, `render_lines`,
   `fonts`. Lower-level access via `AsciiArt::Renderer.new(font)`.

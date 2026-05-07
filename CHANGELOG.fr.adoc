@@ -7,15 +7,15 @@
 
 === Modifié
 
-* **Repo GitHub renommé** `aloli-crystal/crystal-asciiart` →
+* **Repo GitHub renommé** `aloli-crystal/asciiart` →
   `aloli-crystal/asciiart` (convention de nommage Aloli : les
   créations originales abandonnent le préfixe `crystal-`). Les anciens
   liens redirigent automatiquement.
-* Champ `name:` du `shard.yml` mis à jour de `crystal-asciiart` à `asciiart`.
-* Cible de compilation et binaire CLI renommés `crystal-asciiart` →
+* Champ `name:` du `shard.yml` mis à jour de `asciiart` à `asciiart`.
+* Cible de compilation et binaire CLI renommés `asciiart` →
   `asciiart` (`shards build asciiart` → `bin/asciiart`).
 * Nouveau fichier d'entrée shim `src/asciiart.cr` (charge
-  `src/ascii_art.cr`) ; `require "crystal-asciiart"` devient
+  `src/ascii_art.cr`) ; `require "asciiart"` devient
   `require "asciiart"`.
 
 == v0.1.0 — 2026-04-25
@@ -34,7 +34,7 @@ C `figlet` à l'exécution).
   macro `read_file` : `standard`, `small`, `big`, `slant`,
   `banner`. Toutes sous licence permissive FIGlet.
 * **Chargement de police externe** via `Fonts.load_file(chemin)`.
-* **CLI** : `crystal-asciiart [-f POLICE] [--font-file CHEMIN]
+* **CLI** : `asciiart [-f POLICE] [--font-file CHEMIN]
   [--list-fonts] TEXTE…` avec drapeaux courts et longs.
 * **API** : `AsciiArt.render(text, font:)`, `render_lines`,
   `fonts`. Accès bas niveau via `AsciiArt::Renderer.new(font)`.
